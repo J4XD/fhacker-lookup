@@ -10,11 +10,23 @@
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap');
     
     body { 
-      background: radial-gradient(circle at center, #000 0%, #0a0a0a 100%); 
+      background: radial-gradient(circle at center, #000 0%, #0a0a0a 70%, #000000 100%);
       color: #00ff99; 
       font-family: 'Share Tech Mono', monospace; 
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      animation: bg-pulse 20s infinite alternate;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    @keyframes bg-pulse {
+      0% { background-position: center; }
+      100% { background-position: 50% 60%; }
     }
 
     :root {
@@ -23,8 +35,8 @@
       --neon-purple: #b027ff;
       --neon-pink: #ff00ff;
       --dark-bg: #0a0a0a;
-      --card-bg: rgba(10, 10, 10, 0.92);
-      --input-bg: rgba(17, 17, 17, 0.85);
+      --card-bg: rgba(10, 10, 10, 0.94);
+      --input-bg: rgba(17, 17, 17, 0.88);
     }
     
     .card {
@@ -32,18 +44,23 @@
       border: 1px solid var(--neon-green);
       box-shadow: 
         0 0 15px rgba(0, 255, 153, 0.4),
-        0 10px 30px rgba(0, 0, 0, 0.7),
-        inset 0 0 10px rgba(0, 255, 153, 0.15);
+        0 10px 30px rgba(0, 0, 0, 0.75),
+        inset 0 0 10px rgba(0, 255, 153, 0.1);
       transform: perspective(1000px) rotateX(2deg);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(2px);
+      max-width: 500px;
+      width: 100%;
+      padding: 20px;
+      border-radius: 16px;
     }
     
     .card:hover {
-      transform: perspective(1000px) rotateX(0deg) translateY(-5px);
+      transform: perspective(1000px) rotateX(0deg) translateY(-6px);
       box-shadow: 
         0 0 25px rgba(0, 255, 153, 0.7),
-        0 15px 40px rgba(0, 0, 0, 0.8),
-        inset 0 0 15px rgba(0, 255, 153, 0.25);
+        0 15px 40px rgba(0, 0, 0, 0.85),
+        inset 0 0 15px rgba(0, 255, 153, 0.2);
     }
     
     .glow-text {
@@ -52,7 +69,8 @@
         0 0 10px var(--neon-green),
         0 0 15px rgba(0, 255, 153, 0.7);
       font-family: 'Orbitron', sans-serif;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
     }
     
     input {
@@ -62,14 +80,22 @@
       font-family: 'Share Tech Mono', monospace;
       padding: 12px 16px;
       transition: all 0.3s ease;
+      border-radius: 12px;
+      font-size: 16px;
+      height: 48px;
+      line-height: 1.4;
+    }
+
+    input::placeholder {
+      color: rgba(0, 255, 153, 0.4);
     }
 
     input:focus {
       outline: none;
-      background: rgba(10, 20, 10, 0.9);
+      background: rgba(10, 25, 15, 0.92);
       box-shadow: 
-        0 0 0 2px rgba(0, 255, 153, 0.3),
-        0 0 15px rgba(0, 255, 153, 0.5);
+        0 0 0 2px rgba(0, 255, 153, 0.4),
+        0 0 15px rgba(0, 255, 153, 0.6);
       border-color: var(--neon-cyan);
     }
 
@@ -79,23 +105,31 @@
       border: none;
       color: var(--neon-green);
       font-weight: bold;
-      padding: 12px 24px;
+      padding: 0 16px;
       font-family: 'Orbitron', sans-serif;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       box-shadow: 
         0 5px 0 #004d26,
-        0 8px 10px rgba(0, 0, 0, 0.5),
+        0 8px 12px rgba(0, 0, 0, 0.6),
         inset 0 0 10px rgba(0, 255, 153, 0.3);
       transition: all 0.2s ease;
       overflow: hidden;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 100px;
+      height: 48px;
+      line-height: 1;
     }
 
     .btn-3d:hover {
       background: linear-gradient(145deg, #0c4a20, #00331a);
       box-shadow: 
         0 4px 0 #004d26,
-        0 7px 10px rgba(0, 0, 0, 0.5),
+        0 7px 12px rgba(0, 0, 0, 0.6),
         inset 0 0 15px rgba(0, 255, 153, 0.5);
       transform: translateY(1px);
       color: var(--neon-cyan);
@@ -105,41 +139,43 @@
       transform: translateY(4px);
       box-shadow: 
         0 1px 0 #004d26,
-        0 3px 5px rgba(0, 0, 0, 0.5),
+        0 3px 6px rgba(0, 0, 0, 0.5),
         inset 0 0 20px rgba(0, 255, 153, 0.7);
     }
 
     .row-field {
-      padding: 12px 16px;
+      padding: 14px 18px;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.03);
-      margin-bottom: 12px;
-      border: 1px solid rgba(0, 255, 153, 0.1);
+      background: rgba(0, 30, 20, 0.25);
+      margin-bottom: 14px;
+      border: 1px solid rgba(0, 255, 153, 0.12);
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      line-height: 1.4;
     }
 
     .row-field:hover {
-      background: rgba(0, 30, 20, 0.4);
-      border-color: rgba(0, 255, 153, 0.3);
-      box-shadow: 0 0 15px rgba(0, 255, 153, 0.2);
+      background: rgba(0, 40, 25, 0.45);
+      border-color: rgba(0, 255, 153, 0.35);
+      box-shadow: 0 0 12px rgba(0, 255, 153, 0.25);
     }
 
     .label {
       color: #98ffb8;
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       font-weight: 600;
+      margin-bottom: 4px;
     }
 
     .val {
       color: #eafff0;
       font-weight: 700;
       font-size: 16px;
-      margin-top: 6px;
       font-family: 'Orbitron', sans-serif;
+      word-break: break-all;
     }
 
     .action-btn {
@@ -164,43 +200,78 @@
 
     .scan-line {
       position: absolute;
-      top: 0;
+      top: -4px;
       left: 0;
       width: 100%;
       height: 4px;
-      background: linear-gradient(to right, transparent, rgba(0, 255, 153, 0.7), transparent);
-      animation: scan 8s linear infinite;
-      z-index: 10;
-      opacity: 0.7;
+      background: linear-gradient(to right, transparent, rgba(0, 255, 153, 0.8), transparent);
+      animation: scan 10s linear infinite;
+      z-index: -1;
+      opacity: 0.6;
     }
 
     @keyframes scan {
-      0% { top: 0; }
+      0% { top: -4px; }
       100% { top: 100%; }
+    }
+
+    /* Status message styling */
+    #status {
+      min-height: 24px;
+      line-height: 1.4;
+      font-size: 14px;
+    }
+
+    /* Flex container for input + button */
+    .input-group {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      .btn-3d {
+        padding: 0 12px;
+        font-size: 14px;
+        min-width: 80px;
+      }
+      input {
+        font-size: 14px;
+        padding: 10px 12px;
+      }
+      .glow-text {
+        font-size: 28px;
+      }
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6 relative">
+<body class="relative">
   <div class="scan-line"></div>
   
-  <div class="w-full max-w-xl card rounded-2xl p-7 relative">
+  <div class="card">
     <div class="text-center mb-6">
-      <h1 class="text-4xl font-bold mb-2 glow-text">FEARLESS HACKER</h1>
-      <p class="text-sm text-green-400">Phone lookup — enter a number and press SEARCH</p>
+      <h1 class="text-3xl md:text-4xl font-bold mb-2 glow-text">FEARLESS HACKER</h1>
+      <p class="text-xs md:text-sm text-green-400">Phone lookup — enter a number and press SEARCH</p>
     </div>
     
-    <div class="flex gap-3">
-      <input id="num" autocomplete="tel" inputmode="numeric" type="text" placeholder="Enter mobile number (e.g. +919876543210)" class="flex-1 rounded-xl px-4 py-3 text-lg" />
+    <div class="input-group">
+      <input id="num" autocomplete="tel" inputmode="numeric" type="text" placeholder="Enter mobile number (e.g. +919876543210)" class="flex-1 rounded-xl px-4 py-3" />
       <button id="btn" class="btn-3d">
-        <i class="fas fa-search mr-2"></i>SEARCH
+        <i class="fas fa-search"></i> SEARCH
       </button>
     </div>
 
-    <div id="status" class="mt-5 text-sm text-green-500 text-center min-h-[24px]"></div>
+    <div id="status" class="mt-4 text-sm text-green-500 text-center min-h-[24px]"></div>
 
-    <div id="result" class="mt-5 border border-green-500 rounded-xl p-5 hidden">
-      <strong class="text-lg glow-text">RESULT</strong>
-      <div id="fieldsArea" class="mt-4"></div>
+    <div id="result" class="mt-6 border border-green-500/30 rounded-xl p-5 hidden">
+      <strong class="text-xl glow-text block text-center pb-3 border-b border-green-500/20">RESULT</strong>
+      <div id="fieldsArea" class="mt-4 space-y-2"></div>
     </div>
   </div>
 
@@ -268,7 +339,7 @@ btn.addEventListener('click', async ()=>{
     resultBox.classList.remove('hidden');
     status.textContent = '';
   } catch(err){
-    status.textContent = 'Error: ' + err.message;
+    status.textContent = 'Error: ' + (err.message || 'Unknown error');
   } finally {
     btn.disabled = false;
   }
