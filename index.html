@@ -8,278 +8,45 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap');
-    
-    body { 
-      background: radial-gradient(circle at center, #000 0%, #0a0a0a 70%, #000000 100%);
-      color: #00ff99; 
-      font-family: 'Share Tech Mono', monospace; 
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      animation: bg-pulse 20s infinite alternate;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      box-sizing: border-box;
-    }
-
-    @keyframes bg-pulse {
-      0% { background-position: center; }
-      100% { background-position: 50% 60%; }
-    }
-
-    :root {
-      --neon-green: #00ff99;
-      --neon-cyan: #00ffff;
-      --neon-purple: #b027ff;
-      --neon-pink: #ff00ff;
-      --dark-bg: #0a0a0a;
-      --card-bg: rgba(10, 10, 10, 0.94);
-      --input-bg: rgba(17, 17, 17, 0.88);
-    }
-    
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--neon-green);
-      box-shadow: 
-        0 0 15px rgba(0, 255, 153, 0.4),
-        0 10px 30px rgba(0, 0, 0, 0.75),
-        inset 0 0 10px rgba(0, 255, 153, 0.1);
-      transform: perspective(1000px) rotateX(2deg);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      backdrop-filter: blur(2px);
-      max-width: 500px;
-      width: 100%;
-      padding: 20px;
-      border-radius: 16px;
-    }
-    
-    .card:hover {
-      transform: perspective(1000px) rotateX(0deg) translateY(-6px);
-      box-shadow: 
-        0 0 25px rgba(0, 255, 153, 0.7),
-        0 15px 40px rgba(0, 0, 0, 0.85),
-        inset 0 0 15px rgba(0, 255, 153, 0.2);
-    }
-    
-    .glow-text {
-      text-shadow: 
-        0 0 5px var(--neon-green),
-        0 0 10px var(--neon-green),
-        0 0 15px rgba(0, 255, 153, 0.7);
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 1.5px;
-      font-weight: 700;
-    }
-    
-    input {
-      background: var(--input-bg);
-      border: 1px solid var(--neon-green);
-      color: var(--neon-green);
-      font-family: 'Share Tech Mono', monospace;
-      padding: 12px 16px;
-      transition: all 0.3s ease;
-      border-radius: 12px;
-      font-size: 16px;
-      height: 48px;
-      line-height: 1.4;
-    }
-
-    input::placeholder {
-      color: rgba(0, 255, 153, 0.4);
-    }
-
-    input:focus {
-      outline: none;
-      background: rgba(10, 25, 15, 0.92);
-      box-shadow: 
-        0 0 0 2px rgba(0, 255, 153, 0.4),
-        0 0 15px rgba(0, 255, 153, 0.6);
-      border-color: var(--neon-cyan);
-    }
-
-    .btn-3d {
-      position: relative;
-      background: linear-gradient(145deg, #0a3a1a, #002211);
-      border: none;
-      color: var(--neon-green);
-      font-weight: bold;
-      padding: 0 16px;
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      box-shadow: 
-        0 5px 0 #004d26,
-        0 8px 12px rgba(0, 0, 0, 0.6),
-        inset 0 0 10px rgba(0, 255, 153, 0.3);
-      transition: all 0.2s ease;
-      overflow: hidden;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-width: 100px;
-      height: 48px;
-      line-height: 1;
-    }
-
-    .btn-3d:hover {
-      background: linear-gradient(145deg, #0c4a20, #00331a);
-      box-shadow: 
-        0 4px 0 #004d26,
-        0 7px 12px rgba(0, 0, 0, 0.6),
-        inset 0 0 15px rgba(0, 255, 153, 0.5);
-      transform: translateY(1px);
-      color: var(--neon-cyan);
-    }
-
-    .btn-3d:active {
-      transform: translateY(4px);
-      box-shadow: 
-        0 1px 0 #004d26,
-        0 3px 6px rgba(0, 0, 0, 0.5),
-        inset 0 0 20px rgba(0, 255, 153, 0.7);
-    }
-
-    .row-field {
-      padding: 14px 18px;
-      border-radius: 10px;
-      background: rgba(0, 30, 20, 0.25);
-      margin-bottom: 14px;
-      border: 1px solid rgba(0, 255, 153, 0.12);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      line-height: 1.4;
-    }
-
-    .row-field:hover {
-      background: rgba(0, 40, 25, 0.45);
-      border-color: rgba(0, 255, 153, 0.35);
-      box-shadow: 0 0 12px rgba(0, 255, 153, 0.25);
-    }
-
-    .label {
-      color: #98ffb8;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .val {
-      color: #eafff0;
-      font-weight: 700;
-      font-size: 16px;
-      font-family: 'Orbitron', sans-serif;
-      word-break: break-all;
-    }
-
-    .action-btn {
-      background: rgba(10, 20, 15, 0.7);
-      border: 1px solid var(--neon-green);
-      color: var(--neon-green);
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .action-btn:hover {
-      background: rgba(0, 50, 30, 0.8);
-      box-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
-      transform: translateY(-2px);
-    }
-
-    .scan-line {
-      position: absolute;
-      top: -4px;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(to right, transparent, rgba(0, 255, 153, 0.8), transparent);
-      animation: scan 10s linear infinite;
-      z-index: -1;
-      opacity: 0.6;
-    }
-
-    @keyframes scan {
-      0% { top: -4px; }
-      100% { top: 100%; }
-    }
-
-    /* Status message styling */
-    #status {
-      min-height: 24px;
-      line-height: 1.4;
-      font-size: 14px;
-    }
-
-    /* Flex container for input + button */
-    .input-group {
-      display: flex;
-      gap: 8px;
-      align-items: stretch;
-      width: 100%;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 480px) {
-      .card {
-        padding: 16px;
-        border-radius: 12px;
-      }
-      .btn-3d {
-        padding: 0 12px;
-        font-size: 14px;
-        min-width: 80px;
-      }
-      input {
-        font-size: 14px;
-        padding: 10px 12px;
-      }
-      .glow-text {
-        font-size: 28px;
-      }
-    }
+    body{ background:#000;color:#00ff99;font-family:'Share Tech Mono',monospace;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px; }
+    .card{background:rgba(10,10,10,0.94);border:1px solid #00ff99;box-shadow:0 0 20px rgba(0,255,153,0.5);padding:20px;border-radius:16px;max-width:500px;width:100%}
+    .glow-text{text-shadow:0 0 10px #00ff99;font-family:'Orbitron',sans-serif;font-weight:700;}
+    input{background:#111;border:1px solid #00ff99;color:#00ff99;border-radius:12px;padding:12px;font-family:'Share Tech Mono',monospace;}
+    .btn-3d{background:#013015;color:#00ff99;font-weight:bold;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:8px;}
+    .row-field{background:rgba(0,50,30,0.4);padding:12px;border-radius:10px;border:1px solid rgba(0,255,153,0.3);}
+    .label{font-size:12px;color:#7cffc6;text-transform:uppercase;}
+    .val{font-size:16px;color:#eafff0;font-weight:700;word-break:break-word;}
   </style>
 </head>
-<body class="relative">
-  <div class="scan-line"></div>
-  
+<body>
   <div class="card">
-    <div class="text-center mb-6">
-      <h1 class="text-3xl md:text-4xl font-bold mb-2 glow-text">FEARLESS HACKER</h1>
-      <p class="text-xs md:text-sm text-green-400">Phone lookup — enter a number and press SEARCH</p>
-    </div>
-    
-    <div class="input-group">
-      <input id="num" autocomplete="tel" inputmode="numeric" type="text" placeholder="Enter mobile number (e.g. +919876543210)" class="flex-1 rounded-xl px-4 py-3" />
-      <button id="btn" class="btn-3d">
-        <i class="fas fa-search"></i> SEARCH
-      </button>
+    <h1 class="text-3xl text-center glow-text mb-2">FEARLESS HACKER</h1>
+    <p class="text-xs text-center text-green-400 mb-4">Phone lookup — enter a number and press SEARCH</p>
+
+    <div class="flex gap-2">
+      <input id="num" type="text" placeholder="+919876543210" class="flex-1" />
+      <button id="btn" class="btn-3d"><i class="fas fa-search"></i>SEARCH</button>
     </div>
 
-    <div id="status" class="mt-4 text-sm text-green-500 text-center min-h-[24px]"></div>
+    <div id="status" class="mt-3 text-center text-green-400 text-sm min-h-[20px]"></div>
 
-    <div id="result" class="mt-6 border border-green-500/30 rounded-xl p-5 hidden">
-      <strong class="text-xl glow-text block text-center pb-3 border-b border-green-500/20">RESULT</strong>
-      <div id="fieldsArea" class="mt-4 space-y-2"></div>
+    <div id="result" class="mt-5 hidden border border-green-500 p-4 rounded-xl">
+      <strong class="block text-center text-xl glow-text border-b border-green-500 pb-2">RESULT</strong>
+      <div id="fieldsArea" class="mt-3 space-y-2"></div>
     </div>
   </div>
 
 <script>
-const API_TEMPLATE = "https://mynkapi.amit1100941.workers.dev/?mobile={NUM}&key=onlymynk";
-const CORS_PROXY = "https://corsproxy.io/?";
+const BASE_API = "https://shadow-x-osint.vercel.app/api?key=Shadow&type=mobile&term={NUM}";
 
-function validNumber(s){ return /^\+?\d{6,15}$/.test(s.trim()); }
+// Primary + multiple CORS fallbacks
+const PROXIES = [
+  "", // direct
+  "https://corsproxy.io/?",
+  "https://api.allorigins.win/raw?url=",
+];
+
+function validNumber(s){ return /^\+?\d{8,15}$/.test(s.trim()); }
 
 const numInput = document.getElementById('num');
 const btn = document.getElementById('btn');
@@ -287,16 +54,8 @@ const status = document.getElementById('status');
 const resultBox = document.getElementById('result');
 const fieldsArea = document.getElementById('fieldsArea');
 
-async function fetchWithFallback(url){
-  try {
-    const r = await fetch(url);
-    if (r.ok) return r;
-  } catch (e) { }
-  return await fetch(CORS_PROXY + encodeURIComponent(url));
-}
-
 function clearDisplay(){
-  fieldsArea.innerHTML = '';
+  fieldsArea.innerHTML = "";
   resultBox.classList.add('hidden');
 }
 
@@ -307,39 +66,92 @@ function renderRow(label, value){
   fieldsArea.appendChild(div);
 }
 
+// Try fetching through a list of proxies until JSON is obtained
+async function fetchJSONWithFallback(rawUrl){
+  let lastErr;
+  for (const p of PROXIES) {
+    const url = p ? (p + encodeURIComponent(rawUrl)) : rawUrl;
+    try {
+      const resp = await fetch(url, { headers: { "Accept": "application/json, text/plain;q=0.9,*/*;q=0.8" } });
+      const ctype = resp.headers.get("content-type") || "";
+      const text = await resp.text();
+
+      // If HTML came back (starts with '<' or content-type html), skip to next proxy
+      if (ctype.includes("text/html") || text.trim().startsWith("<")) {
+        lastErr = new Error("Server returned HTML (likely CORS/redirect).");
+        continue;
+      }
+      // Try parse JSON
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        // some proxies strip headers; still ensure it's valid JSON text
+        if (text.trim().startsWith("{") || text.trim().startsWith("[")) {
+          return JSON.parse(text);
+        }
+        lastErr = new Error("Not valid JSON from server.");
+        continue;
+      }
+    } catch (e) {
+      lastErr = e;
+      continue;
+    }
+  }
+  throw lastErr || new Error("Unable to fetch JSON");
+}
+
 btn.addEventListener('click', async ()=>{
   const num = numInput.value.trim();
   clearDisplay();
-  status.textContent = '';
+  status.textContent = "";
+
   if(!validNumber(num)){
-    status.textContent = 'Invalid number. Use +countrycode (e.g. +919876543210).';
+    status.textContent = "❌ Invalid number format. Use with country code.";
     return;
   }
-  status.textContent = 'Searching database...';
+
+  status.textContent = "🔍 Searching database...";
   btn.disabled = true;
 
-  const url = API_TEMPLATE.replace('{NUM}', encodeURIComponent(num));
+  // Build raw API URL
+  const apiUrl = BASE_API.replace("{NUM}", encodeURIComponent(num));
 
-  try{
-    const resp = await fetchWithFallback(url);
-    const text = await resp.text();
+  try {
+    const json = await fetchJSONWithFallback(apiUrl);
 
-    let parsed = null;
-    try { parsed = JSON.parse(text); } catch(e){ parsed = null; }
-
-    if(!parsed || !parsed.data || parsed.data.length === 0){
-      renderRow('Info', 'Information not found');
-    } else {
-      const d = parsed.data[0];
-      Object.keys(d).forEach(k => {
-        renderRow(k.toUpperCase(), d[k] || 'Not available');
-      });
+    // Expecting: { success: true, result: [ {...}, ... ] }
+    let rows = [];
+    if (json && json.success && Array.isArray(json.result)) {
+      rows = json.result;
+    } else if (Array.isArray(json.data)) {
+      rows = json.data;
+    } else if (Array.isArray(json.result?.data)) {
+      rows = json.result.data;
     }
 
-    resultBox.classList.remove('hidden');
-    status.textContent = '';
+    if (!rows.length) {
+      renderRow("Info", "No information found");
+    } else {
+      const d = rows[0];
+
+      const fields = {
+        "Mobile": d.mobile || d.phone || "",
+        "Name": d.name || d.owner || "",
+        "Father Name": d.father_name || "",
+        "Address": (d.address || "").replace(/!/g, ", "),
+        "Alternate Mobile": d.alt_mobile || "",
+        "Circle": d.circle || d.carrier || "",
+        "ID Number": d.id_number || d.id || "",
+        "Email": d.email || ""
+      };
+
+      Object.entries(fields).forEach(([k,v]) => renderRow(k, v || "Not Available"));
+    }
+
+    resultBox.classList.remove("hidden");
+    status.textContent = "";
   } catch(err){
-    status.textContent = 'Error: ' + (err.message || 'Unknown error');
+    status.textContent = "⚠️ Error: " + (err.message || "Unknown error");
   } finally {
     btn.disabled = false;
   }
