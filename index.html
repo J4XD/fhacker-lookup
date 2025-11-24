@@ -1,161 +1,314 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Fearless Hacker - Phone Lookup</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Junaid OSINT</title>
+  <!-- 🔹 IBM Plex Mono (Modern Hacker Font) -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap');
-    body{ background:#000;color:#00ff99;font-family:'Share Tech Mono',monospace;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px; }
-    .card{background:rgba(10,10,10,0.94);border:1px solid #00ff99;box-shadow:0 0 20px rgba(0,255,153,0.5);padding:20px;border-radius:16px;max-width:500px;width:100%}
-    .glow-text{text-shadow:0 0 10px #00ff99;font-family:'Orbitron',sans-serif;font-weight:700;}
-    input{background:#111;border:1px solid #00ff99;color:#00ff99;border-radius:12px;padding:12px;font-family:'Share Tech Mono',monospace;}
-    .btn-3d{background:#013015;color:#00ff99;font-weight:bold;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:8px;}
-    .row-field{background:rgba(0,50,30,0.4);padding:12px;border-radius:10px;border:1px solid rgba(0,255,153,0.3);}
-    .label{font-size:12px;color:#7cffc6;text-transform:uppercase;}
-    .val{font-size:16px;color:#eafff0;font-weight:700;word-break:break-word;}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.8px;
+    }
+    body {
+      background: #0a0a0f;
+      color: #0f9d58;
+      padding: 20px;
+      line-height: 1.7;
+      background-image: 
+        linear-gradient(45deg, rgba(0,0,0,0.08) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0,0,0,0.08) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.08) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.08) 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #0c0c14;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 128, 0.3);
+      border: 1px solid #0f9d58;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #0f9d58;
+      font-size: 28px;
+      text-shadow: 0 0 5px #0f9d58;
+      letter-spacing: 2px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .hacker-icon {
+      font-size: 32px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #0f9d58;
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-shadow: 0 0 3px #fff;
+      box-shadow: 0 0 10px rgba(0, 255, 128, 0.5);
+      font-size: 16px;
+    }
+    .btn:hover {
+      background: #00ff80;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0, 255, 128, 0.8);
+    }
+    .search-box {
+      display: none;
+      margin-top: 20px;
+    }
+    .search-box.active {
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #0f9d58;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      background: #0c0c14;
+      color: #0f9d58;
+      caret-color: #0f9d58;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 255, 128, 0.3);
+      font-weight: 500;
+    }
+    input:focus {
+      box-shadow: 0 0 10px rgba(0, 255, 128, 0.6);
+    }
+    button#submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: #0f9d58;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-shadow: 0 0 3px #fff;
+      box-shadow: 0 0 10px rgba(0, 255, 128, 0.5);
+      font-weight: 600;
+    }
+    button#submit-btn:hover {
+      background: #00ff80;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0, 255, 128, 0.8);
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #0c0c14;
+      border-radius: 8px;
+      border: 1px solid #0f9d58;
+      display: none;
+    }
+    #result h3 {
+      margin-bottom: 10px;
+      color: #0f9d58;
+      text-shadow: 0 0 5px #0f9d58;
+      font-weight: 600;
+    }
+    .data-line {
+      margin: 8px 0;
+      padding: 10px;
+      background: #0e0e16;
+      border-radius: 6px;
+      border-left: 4px solid #0f9d58;
+      font-size: 15px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      box-shadow: 0 0 5px rgba(0, 255, 128, 0.2);
+      font-weight: 500;
+    }
+    .data-line strong {
+      color: #0f9d58;
+      font-weight: 600;
+    }
+    .note {
+      margin-top: 25px;
+      font-size: 13px;
+      color: #ff5722;
+      text-align: center;
+      text-shadow: 0 0 3px #ff5722;
+      font-weight: 500;
+    }
+    .terminal {
+      font-family: 'IBM Plex Mono', monospace;
+      background: #000;
+      color: #0f9d58;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #0f9d58;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 14px;
+      box-shadow: 0 0 10px rgba(0, 255, 128, 0.3);
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1 class="text-3xl text-center glow-text mb-2">FEARLESS HACKER</h1>
-    <p class="text-xs text-center text-green-400 mb-4">Phone lookup — enter a number and press SEARCH</p>
+  <div class="container">
+    <!-- ✅ Updated Header: Hacker Icon + Clean Title -->
+    <h1><span class="hacker-icon">👨‍💻</span> JUNAID OSINT</h1>
 
-    <div class="flex gap-2">
-      <input id="num" type="text" placeholder="+919876543210" class="flex-1" />
-      <button id="btn" class="btn-3d"><i class="fas fa-search"></i>SEARCH</button>
+    <div class="btn-group">
+      <button class="btn" onclick="showSearch('mobile')">📱 Mobile Number Search</button>
     </div>
 
-    <div id="status" class="mt-3 text-center text-green-400 text-sm min-h-[20px]"></div>
-
-    <div id="result" class="mt-5 hidden border border-green-500 p-4 rounded-xl">
-      <strong class="block text-center text-xl glow-text border-b border-green-500 pb-2">RESULT</strong>
-      <div id="fieldsArea" class="mt-3 space-y-2"></div>
+    <div id="mobile-search" class="search-box">
+      <input type="text" id="mobile-input" placeholder="Enter 10-digit mobile number" maxlength="10" />
+      <button id="submit-btn" onclick="fetchData('mobile')">🔍 SEARCH</button>
     </div>
+
+    <div id="result"></div>
+
+    <p class="note">This tool was created by Junaid.fr5 for educational purposes only. Do not misuse.</p>
   </div>
 
-<script>
-const BASE_API = "https://shadow-x-osint.vercel.app/api?key=Shadow&type=mobile&term={NUM}";
+  <script>
+    let activeType = null;
 
-// Primary + multiple CORS fallbacks
-const PROXIES = [
-  "", // direct
-  "https://corsproxy.io/?",
-  "https://api.allorigins.win/raw?url=",
-];
-
-function validNumber(s){ return /^\+?\d{8,15}$/.test(s.trim()); }
-
-const numInput = document.getElementById('num');
-const btn = document.getElementById('btn');
-const status = document.getElementById('status');
-const resultBox = document.getElementById('result');
-const fieldsArea = document.getElementById('fieldsArea');
-
-function clearDisplay(){
-  fieldsArea.innerHTML = "";
-  resultBox.classList.add('hidden');
-}
-
-function renderRow(label, value){
-  const div = document.createElement('div');
-  div.className = 'row-field';
-  div.innerHTML = `<div class="label">${label}</div><div class="val">${value}</div>`;
-  fieldsArea.appendChild(div);
-}
-
-// Try fetching through a list of proxies until JSON is obtained
-async function fetchJSONWithFallback(rawUrl){
-  let lastErr;
-  for (const p of PROXIES) {
-    const url = p ? (p + encodeURIComponent(rawUrl)) : rawUrl;
-    try {
-      const resp = await fetch(url, { headers: { "Accept": "application/json, text/plain;q=0.9,*/*;q=0.8" } });
-      const ctype = resp.headers.get("content-type") || "";
-      const text = await resp.text();
-
-      // If HTML came back (starts with '<' or content-type html), skip to next proxy
-      if (ctype.includes("text/html") || text.trim().startsWith("<")) {
-        lastErr = new Error("Server returned HTML (likely CORS/redirect).");
-        continue;
+    function showSearch(type) {
+      document.getElementById('mobile-search').classList.remove('active');
+      if (type === 'mobile') {
+        document.getElementById('mobile-search').classList.add('active');
+        activeType = 'mobile';
       }
-      // Try parse JSON
-      try {
-        return JSON.parse(text);
-      } catch (e) {
-        // some proxies strip headers; still ensure it's valid JSON text
-        if (text.trim().startsWith("{") || text.trim().startsWith("[")) {
-          return JSON.parse(text);
+    }
+
+    async function fetchData(type) {
+      let term = '';
+      if (type === 'mobile') {
+        term = document.getElementById('mobile-input').value.trim();
+        if (!/^\d{10}$/.test(term)) {
+          alert("Please enter a valid 10-digit mobile number.");
+          return;
         }
-        lastErr = new Error("Not valid JSON from server.");
-        continue;
       }
-    } catch (e) {
-      lastErr = e;
-      continue;
-    }
-  }
-  throw lastErr || new Error("Unable to fetch JSON");
-}
 
-btn.addEventListener('click', async ()=>{
-  const num = numInput.value.trim();
-  clearDisplay();
-  status.textContent = "";
+      const url = `http://aetherosint.site/cutieee/api.php?key=junaid&type=mobile&term=${term}`;
 
-  if(!validNumber(num)){
-    status.textContent = "❌ Invalid number format. Use with country code.";
-    return;
-  }
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`API returned error: ${response.status}`);
 
-  status.textContent = "🔍 Searching database...";
-  btn.disabled = true;
+        const rawText = await response.text();
 
-  // Build raw API URL
-  const apiUrl = BASE_API.replace("{NUM}", encodeURIComponent(num));
+        let data;
+        try {
+          data = JSON.parse(rawText);
+        } catch (e) {
+          data = parseRawResponse(rawText);
+        }
 
-  try {
-    const json = await fetchJSONWithFallback(apiUrl);
+        displayResults(data, type);
 
-    // Expecting: { success: true, result: [ {...}, ... ] }
-    let rows = [];
-    if (json && json.success && Array.isArray(json.result)) {
-      rows = json.result;
-    } else if (Array.isArray(json.data)) {
-      rows = json.data;
-    } else if (Array.isArray(json.result?.data)) {
-      rows = json.result.data;
+      } catch (err) {
+        document.getElementById('result').innerHTML = `<h3>Error:</h3><pre class="terminal">${err.message}</pre>`;
+        document.getElementById('result').style.display = 'block';
+      }
     }
 
-    if (!rows.length) {
-      renderRow("Info", "No information found");
-    } else {
-      const d = rows[0];
+    function parseRawResponse(rawText) {
+      let cleanText = rawText.replace(/[\n\r\t]/g, ' ').replace(/\s+/g, ' ').trim();
+      let result = [];
+      const pattern = /"(\w+)"\s*:\s*"([^"]*)"/g;
+      let match;
+      let obj = {};
 
-      const fields = {
-        "Mobile": d.mobile || d.phone || "",
-        "Name": d.name || d.owner || "",
-        "Father Name": d.father_name || "",
-        "Address": (d.address || "").replace(/!/g, ", "),
-        "Alternate Mobile": d.alt_mobile || "",
-        "Circle": d.circle || d.carrier || "",
-        "ID Number": d.id_number || d.id || "",
-        "Email": d.email || ""
-      };
+      while ((match = pattern.exec(cleanText)) !== null) {
+        let key = match[1];
+        let value = match[2];
+        obj[key] = value;
+      }
 
-      Object.entries(fields).forEach(([k,v]) => renderRow(k, v || "Not Available"));
+      if (Object.keys(obj).length > 0) {
+        result.push(obj);
+      }
+
+      if (result.length === 0) {
+        return { error: "Could not parse response", raw: rawText };
+      }
+
+      return result;
     }
 
-    resultBox.classList.remove("hidden");
-    status.textContent = "";
-  } catch(err){
-    status.textContent = "⚠️ Error: " + (err.message || "Unknown error");
-  } finally {
-    btn.disabled = false;
-  }
-});
-</script>
+    function displayResults(data, type) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<h3>🔍 Result for Mobile:</h3>`;
+      resultDiv.style.display = 'block';
+
+      if (data.error) {
+        resultDiv.innerHTML += `<div class="data-line"><strong>Error:</strong> ${data.error}</div>`;
+        return;
+      }
+
+      if (Array.isArray(data)) {
+        data.forEach((item, index) => {
+          let html = ``;
+          if (item.mobile) html += `<div class="data-line"><strong>Mobile Number:</strong> ${item.mobile}</div>`;
+          if (item.name) html += `<div class="data-line"><strong>Full Name:</strong> ${item.name}</div>`;
+          if (item.fname) html += `<div class="data-line"><strong>Father Name:</strong> ${item.fname}</div>`;
+          if (item.address) html += `<div class="data-line"><strong>Address:</strong> ${item.address}</div>`;
+          if (item.id) html += `<div class="data-line"><strong>Aadhaar No:</strong> ${item.id}</div>`;
+          if (item.alt) html += `<div class="data-line"><strong>Alternate No:</strong> ${item.alt}</div>`;
+          if (item.circle) html += `<div class="data-line"><strong>Circle:</strong> ${item.circle}</div>`;
+          if (html === '') {
+            html = `<div class="data-line"><strong>No data found for this record.</strong></div>`;
+          }
+          resultDiv.innerHTML += html;
+        });
+      } else if (typeof data === 'object') {
+        let html = ``;
+        if (data.mobile) html += `<div class="data-line"><strong>Mobile Number:</strong> ${data.mobile}</div>`;
+        if (data.name) html += `<div class="data-line"><strong>Full Name:</strong> ${data.name}</div>`;
+        if (data.fname) html += `<div class="data-line"><strong>Father Name:</strong> ${data.fname}</div>`;
+        if (data.address) html += `<div class="data-line"><strong>Address:</strong> ${data.address}</div>`;
+        if (data.id) html += `<div class="data-line"><strong>Aadhaar No:</strong> ${data.id}</div>`;
+        if (data.alt) html += `<div class="data-line"><strong>Alternate No:</strong> ${data.alt}</div>`;
+        if (data.circle) html += `<div class="data-line"><strong>Circle:</strong> ${data.circle}</div>`;
+        if (html === '') {
+          html = `<div class="data-line"><strong>No data found.</strong></div>`;
+        }
+        resultDiv.innerHTML += html;
+      } else {
+        resultDiv.innerHTML += `<div class="data-line"><strong>Raw Response:</strong><br><pre class="terminal">${rawText}</pre></div>`;
+      }
+    }
+  </script>
 </body>
 </html>
